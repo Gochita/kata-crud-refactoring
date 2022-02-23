@@ -1,23 +1,24 @@
-package co.com.sofka.crud.models;
+package co.com.sofka.crud.entities;
 
 
 import javax.persistence.*;
 
 @Entity
-public class ListaTodoModel {
+public class ListaTodoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique=true, nullable=false)
     private Long id;
 
     @Column(length = 15, nullable = false, unique = true)
     private String name;
 
 
-    public ListaTodoModel() {
+    public ListaTodoEntity() {
     }
 
-    public ListaTodoModel(String name) {
+    public ListaTodoEntity(String name) {
         this.name = name;
     }
 
@@ -39,7 +40,7 @@ public class ListaTodoModel {
 
     @Override
     public String toString() {
-        return "ListaTodoModel{" +
+        return "ListaTodoEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

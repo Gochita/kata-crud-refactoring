@@ -1,35 +1,34 @@
-package co.com.sofka.crud.models;
+package co.com.sofka.crud.entities;
 
 import javax.persistence.*;
 
 @Entity
-public class TodoModel {
+public class TodoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique=true, nullable=false)
     private Long id;
 
 
     @Column(length = 25, nullable = false)
     private String name;
 
-    @Column
+    @Column(nullable=false)
     private boolean completed;
 
-    @Column(length = 10, nullable = false, unique = true)
-    private String listaTodoId;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_lista")
-    private ListaTodoModel listaTodoModel;
+    @JoinColumn(name = "id_lista", nullable=false)
+    private ListaTodoEntity listaTodoModel;
 
 
 
-    public ListaTodoModel getListaTodoModel() {
+    public ListaTodoEntity getListaTodoModel() {
         return listaTodoModel;
     }
 
-    public void setListaTodoModel(ListaTodoModel listaTodoModel) {
+    public void setListaTodoModel(ListaTodoEntity listaTodoModel) {
         this.listaTodoModel = listaTodoModel;
     }
 
@@ -58,10 +57,10 @@ public class TodoModel {
         this.completed = completed;
     }
 
-    public TodoModel() {
+    public TodoEntity() {
     }
 
-    public TodoModel(String name, boolean completed, ListaTodoModel listaTodoModel) {
+    public TodoEntity(String name, boolean completed, ListaTodoEntity listaTodoModel) {
         this.name = name;
         this.completed = completed;
         this.listaTodoModel=listaTodoModel;
