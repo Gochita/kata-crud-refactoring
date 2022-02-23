@@ -2,6 +2,7 @@ package co.com.sofka.crud.entities;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class ListaTodoEntity {
@@ -15,11 +16,25 @@ public class ListaTodoEntity {
     private String name;
 
 
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<TodoEntity> listaTodoModel;
+
+    public List<TodoEntity> getListaTodoModel() {
+        return listaTodoModel;
+    }
+
+    public void setListaTodoModel(List<TodoEntity> listaTodoModel) {
+        this.listaTodoModel = listaTodoModel;
+    }
+
     public ListaTodoEntity() {
     }
 
-    public ListaTodoEntity(String name) {
+    public ListaTodoEntity(Long id, String name, List<TodoEntity> listaTodoModel) {
+        this.id = id;
         this.name = name;
+        this.listaTodoModel = listaTodoModel;
     }
 
     public Long getId() {

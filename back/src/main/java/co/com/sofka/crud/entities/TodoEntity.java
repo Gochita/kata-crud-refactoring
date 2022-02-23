@@ -18,12 +18,8 @@ public class TodoEntity {
     private boolean completed;
 
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_lista", nullable=false)
-    private ListaTodoEntity listaTodoModel;
 
-
-
+/*
     public ListaTodoEntity getListaTodoModel() {
         return listaTodoModel;
     }
@@ -31,7 +27,7 @@ public class TodoEntity {
     public void setListaTodoModel(ListaTodoEntity listaTodoModel) {
         this.listaTodoModel = listaTodoModel;
     }
-
+*/
 
     public Long getId() {
         return id;
@@ -63,6 +59,5 @@ public class TodoEntity {
     public TodoEntity(String name, boolean completed, ListaTodoEntity listaTodoModel) {
         this.name = name;
         this.completed = completed;
-        this.listaTodoModel=listaTodoModel;
     }
 }
