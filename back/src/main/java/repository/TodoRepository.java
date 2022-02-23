@@ -1,4 +1,4 @@
-package co.com.sofka.crud;
+package repository;
 
 import model.TodoModel;
 import org.springframework.data.repository.CrudRepository;
