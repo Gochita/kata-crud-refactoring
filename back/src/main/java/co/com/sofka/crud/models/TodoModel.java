@@ -17,18 +17,22 @@ public class TodoModel {
     private boolean completed;
 
     @Column(length = 10, nullable = false, unique = true)
-    private String groupListId;
+    private String listaTodoId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "id_lista")
+    private ListaTodoModel listaTodoModel;
 
 
 
-
-    public String getGroupListId() {
-        return groupListId;
+    public ListaTodoModel getListaTodoModel() {
+        return listaTodoModel;
     }
 
-    public void setGroupListId(String groupListId) {
-        this.groupListId = groupListId;
+    public void setListaTodoModel(ListaTodoModel listaTodoModel) {
+        this.listaTodoModel = listaTodoModel;
     }
+
 
     public Long getId() {
         return id;
@@ -57,9 +61,9 @@ public class TodoModel {
     public TodoModel() {
     }
 
-    public TodoModel(String name, boolean completed, String groupListId) {
+    public TodoModel(String name, boolean completed, ListaTodoModel listaTodoModel) {
         this.name = name;
         this.completed = completed;
-        this.groupListId = groupListId;
+        this.listaTodoModel=listaTodoModel;
     }
 }
