@@ -1,17 +1,26 @@
-package model;
+package co.com.sofka.crud.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TodoModel {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+
+    @Column(length = 25, nullable = false)
     private String name;
+
+    @Column
     private boolean completed;
+
+    @Column(length = 10, nullable = false, unique = true)
     private String groupListId;
+
+
+
 
     public String getGroupListId() {
         return groupListId;
@@ -43,5 +52,14 @@ public class TodoModel {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public TodoModel() {
+    }
+
+    public TodoModel(String name, boolean completed, String groupListId) {
+        this.name = name;
+        this.completed = completed;
+        this.groupListId = groupListId;
     }
 }
