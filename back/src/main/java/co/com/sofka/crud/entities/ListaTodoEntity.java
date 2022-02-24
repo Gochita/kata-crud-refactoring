@@ -18,6 +18,7 @@ public class ListaTodoEntity {
 
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="lista_todo_entity_id")
     private List<TodoEntity> listaTodoModel;
 
     public List<TodoEntity> getListaTodoModel() {
@@ -58,6 +59,7 @@ public class ListaTodoEntity {
         return "ListaTodoEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", listaTodoModel=" + listaTodoModel +
                 '}';
     }
 }

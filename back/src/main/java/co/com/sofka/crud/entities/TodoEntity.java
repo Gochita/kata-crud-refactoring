@@ -17,20 +17,11 @@ public class TodoEntity {
     @Column(nullable=false)
     private boolean completed;
 
-    @Column(nullable=false)
-    private Long idLista;
 
     public Long getId() {
         return id;
     }
 
-    public Long getIdLista() {
-        return idLista;
-    }
-
-    public void setIdLista(Long idLista) {
-        this.idLista = idLista;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -52,11 +43,11 @@ public class TodoEntity {
         this.completed = completed;
     }
 
-    public TodoEntity(Long id, String name, boolean completed, Long idLista) {
+    public TodoEntity(Long id, String name, boolean completed) {
         this.id = id;
         this.name = name;
         this.completed=completed;
-        this.idLista=idLista;
+
     }
 
     public TodoEntity() {

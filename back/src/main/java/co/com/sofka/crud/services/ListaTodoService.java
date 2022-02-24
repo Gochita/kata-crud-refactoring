@@ -44,17 +44,21 @@ public class ListaTodoService {
     }
 
     //Servicio para crear una lista de to dos
-    public ListaTodoDTO createToDoList(ListaTodoDTO listaTodoDTO){
+    public ListaTodoDTO createTodoList(ListaTodoDTO listaTodoDTO) {
+
         ListaTodoEntity todoList = new ListaTodoEntity();
         todoList.setId(listaTodoDTO.getId());
         todoList.setName(listaTodoDTO.getName());
         todoList.setListaTodoModel(new ArrayList<>());
-        return Mapper.mapList_ToListDTO(listaTodoRepository.save(todoList));
+        ListaTodoEntity prueba=listaTodoRepository.save(todoList);
+        System.out.println(prueba);
+     //   return Mapper.mapList_ToListDTO(listaTodoRepository.save(todoList));
+        return Mapper.mapList_ToListDTO(prueba);
     }
 
 
     //Servicio para guardar un to do a una lista por id
-    public TodoDTO saveNewTodoByListId(Long listId, TodoDTO todoDTO){
+    public TodoDTO saveNewTodoByListId(Long listId, TodoDTO todoDTO) {
         var todoLista = listaTodoRepository.findById(listId);
         var todo = Mapper.mapTodoDTO_ToTodo(todoDTO);
         todoLista.orElseGet(ListaTodoEntity::new).getListaTodoModel().add(todo);
@@ -66,6 +70,40 @@ public class ListaTodoService {
         todoDTO.setId(insertedToDo.getId());
         todoDTO.setGroupListId(listId);
         return todoDTO;
+    }
+
+    private List<TodoEntity> editTodosInList(ListaTodoEntity TodoList, TodoDTO todoDTO){
+        return TodoList.getListaTodoModel()
+                .stream()
+                .map(todoEntity -> {
+                    if (todoEntity.getId().equals(todoDTO.getId())){
+                        todoEntity.setName(todoDTO.getName());
+                        todoEntity.setCompleted(todoDTO.isCompleted());
+                    }
+                    return todoEntity;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public TodoDTO updateToDoByListId(Long listId, TodoDTO todoDTO){
+        var TodoList = listaTodoRepository.findById(listId);
+        var updatedTodos = editTodosInList(TodoList.orElseGet(ListaTodoEntity::new), todoDTO);
+        ListaTodoEntity todoLista = new ListaTodoEntity();
+        todoLista.setId(TodoList.orElseGet(ListaTodoEntity::new).getId());
+        todoLista.setName(TodoList.orElseGet(ListaTodoEntity::new).getName());
+        todoLista.setListaTodoModel(TodoList.orElseGet(ListaTodoEntity::new).getListaTodoModel());
+        listaTodoRepository.save(todoLista);
+        todoDTO.setGroupListId(listId);
+        return todoDTO;
+    }
+
+    public void removeTodoListById(Long id){
+        var toDoList = listaTodoRepository.findById(id).orElseThrow();
+        listaTodoRepository.delete(toDoList);
+    }
+    public void removeTodoById(Long id){
+        var toDo = todoRepository.findById(id).orElseThrow();
+        todoRepository.delete(toDo);
     }
 
 
