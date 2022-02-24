@@ -10,15 +10,20 @@ public class ListaTodoDTO {
     private String name;
     private List<TodoEntity> todos;
 
+    //Constructores
     public ListaTodoDTO(Long id, String name, List<TodoEntity> todos) {
         this.id = id;
         this.name = name;
-        this.todos= todos;
+        this.todos = todos;
     }
 
     public ListaTodoDTO() {
     }
 
+
+
+    
+    //Getters y setters
     public Long getId() {
         return id;
     }

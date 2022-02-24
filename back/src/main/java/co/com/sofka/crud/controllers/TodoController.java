@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @Deprecated
+
+//no se ha usado este controller ya que todas las acciones se realizan desde el ListaTodoController
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class TodoController {

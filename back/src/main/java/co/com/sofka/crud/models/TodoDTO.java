@@ -8,6 +8,8 @@ public class TodoDTO {
     private boolean completed;
     private Long groupListId;
 
+
+    //Constructores
     public TodoDTO() {
     }
 
@@ -18,6 +20,8 @@ public class TodoDTO {
         this.groupListId = groupListId;
     }
 
+
+    //Getters y setters
     public Long getId() {
         return id;
     }
