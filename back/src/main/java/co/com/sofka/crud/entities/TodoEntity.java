@@ -17,20 +17,19 @@ public class TodoEntity {
     @Column(nullable=false)
     private boolean completed;
 
-
-
-/*
-    public ListaTodoEntity getListaTodoModel() {
-        return listaTodoModel;
-    }
-
-    public void setListaTodoModel(ListaTodoEntity listaTodoModel) {
-        this.listaTodoModel = listaTodoModel;
-    }
-*/
+    @Column(nullable=false)
+    private Long idLista;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getIdLista() {
+        return idLista;
+    }
+
+    public void setIdLista(Long idLista) {
+        this.idLista = idLista;
     }
 
     public void setId(Long id) {
@@ -53,11 +52,13 @@ public class TodoEntity {
         this.completed = completed;
     }
 
-    public TodoEntity() {
+    public TodoEntity(Long id, String name, boolean completed, Long idLista) {
+        this.id = id;
+        this.name = name;
+        this.completed=completed;
+        this.idLista=idLista;
     }
 
-    public TodoEntity(String name, boolean completed, ListaTodoEntity listaTodoModel) {
-        this.name = name;
-        this.completed = completed;
+    public TodoEntity() {
     }
 }

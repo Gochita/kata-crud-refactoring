@@ -2,12 +2,16 @@ package co.com.sofka.crud.controllers;
 
 
 import co.com.sofka.crud.entities.ListaTodoEntity;
+import co.com.sofka.crud.entities.TodoEntity;
 import co.com.sofka.crud.services.ListaTodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api")
 public class ListaTodoController {
     @Autowired
     private ListaTodoService listaTodoService;
@@ -38,8 +42,8 @@ public class ListaTodoController {
     }
 
     @GetMapping(value = "api/{id}/todo")
-    public ListaTodoEntity get(@PathVariable("id") Long id){
-        return listaTodoService.get(id);
+    public List<TodoEntity> get(@PathVariable("id") Long id){
+        return listaTodoService.getTodosByListId(id);
     }
 
 

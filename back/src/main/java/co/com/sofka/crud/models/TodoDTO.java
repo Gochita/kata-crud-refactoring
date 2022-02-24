@@ -1,23 +1,21 @@
 package co.com.sofka.crud.models;
 
 
-import co.com.sofka.crud.entities.ListaTodoEntity;
-
 public class TodoDTO {
 
     private Long id;
     private String name;
     private boolean completed;
-    private ListaTodoEntity listaTodoModel;
+    private Long groupListId;
 
     public TodoDTO() {
     }
 
-    public TodoDTO(Long id, String name, boolean completed, ListaTodoEntity listaTodoModel) {
+    public TodoDTO(Long id, String name, boolean completed, Long groupListId) {
         this.id = id;
         this.name = name;
         this.completed = completed;
-        this.listaTodoModel = listaTodoModel;
+        this.groupListId = groupListId;
     }
 
     public Long getId() {
@@ -44,11 +42,11 @@ public class TodoDTO {
         this.completed = completed;
     }
 
-    public ListaTodoEntity getListaTodoModel() {
-        return listaTodoModel;
+    public Long getGroupListId() {
+        return groupListId;
     }
 
-    public void setListaTodoModel(ListaTodoEntity listaTodoModel) {
-        this.listaTodoModel = listaTodoModel;
+    public void setGroupListId(Long groupListId) {
+        this.groupListId = groupListId;
     }
 }
