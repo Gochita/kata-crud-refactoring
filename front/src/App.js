@@ -1,11 +1,12 @@
-import React, {  useReducer,  createContext } from 'react';
-import Form from "./components/Form";
-import List from "./components/List";
-export const HOST_API = "http://localhost:8080/api";
+import React, { useReducer, createContext } from 'react';
+import Form from './components/Form';
+import List from './components/List';
 
+export const HOST_API = "http://localhost:8080/api";
 const initialState = {
-  todo: { list: [], item: {} }
+  todo: { list: [{id:0, name: 'lina ricura', completed:false}], item: {} }
 };
+
 const Store = createContext(initialState)
 
 function reducer(state, action) {
@@ -55,11 +56,13 @@ const StoreProvider = ({ children }) => {
 }
 
 function App() {
-  return <StoreProvider>
+  return (
+    <div className='container'> <StoreProvider>
     <h3>To-Do List</h3>
-    <Form Store= {Store} HOST_API={HOST_API}/>
-    <List Store = {Store}/>
+    <Form HOST_API={HOST_API} Store={Store} />
+    <List store={Store} />
   </StoreProvider>
+  </div>)
 }
 
 export default App;

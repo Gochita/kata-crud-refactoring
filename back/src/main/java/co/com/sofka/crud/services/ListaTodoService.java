@@ -105,11 +105,11 @@ public class ListaTodoService {
         var toDo = todoRepository.findById(id).orElseThrow();
         todoRepository.delete(toDo);
     }
-
-
-    public Iterable<TodoEntity> list() {
-        return todoRepository.findAll();
+    public Iterable  <ListaTodoEntity>  traerTodos (){
+        return listaTodoRepository.findAll();
     }
+
+
 
     public TodoEntity save(TodoEntity todo) {
         return todoRepository.save(todo);

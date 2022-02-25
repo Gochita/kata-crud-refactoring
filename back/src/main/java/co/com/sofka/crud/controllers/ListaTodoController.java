@@ -1,5 +1,6 @@
 package co.com.sofka.crud.controllers;
 
+import co.com.sofka.crud.entities.ListaTodoEntity;
 import co.com.sofka.crud.entities.TodoEntity;
 import co.com.sofka.crud.models.ListaTodoDTO;
 import co.com.sofka.crud.models.TodoDTO;
@@ -23,6 +24,11 @@ public class ListaTodoController {
     @GetMapping(value = "/todos/{listId}")
     public List<TodoDTO>  findTodosByListId(@PathVariable ("listId") Long listId){
         return listaTodoService.getTodosByListId(listId);
+    }
+
+    @GetMapping(value="/todos")
+    public Iterable<ListaTodoEntity> FindTodos(){
+        return listaTodoService.traerTodos();
     }
 //Guarda un nuevo to do
     @PostMapping(value = "/todolist")

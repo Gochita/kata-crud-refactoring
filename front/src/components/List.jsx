@@ -1,9 +1,8 @@
-import React, {useContext, useEffect} from 'react';
-
-import {HOST_API} from '../App';
+import React, {useContext, useEffect} from 'react'
+import { HOST_API } from '../App';
 
 const List = (props) => {
-    const { dispatch, state: { todo } } = useContext(props.Store);
+    const { dispatch, state: { todo } } = useContext(props.store);
     const currentList = todo.list;
   
     useEffect(() => {
@@ -73,4 +72,4 @@ const List = (props) => {
     </div>
   }
 
-  export default List;
+export default List

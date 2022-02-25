@@ -1,4 +1,5 @@
-import React, {useContext,  useRef, useState} from 'react';
+import React, { useRef, useState, useContext } from 'react'
+
 
 const Form = (props) => {
     const formRef = useRef(null);
@@ -16,7 +17,7 @@ const Form = (props) => {
       };
   
   
-      fetch(props.HOST_API + "/todo", {
+      fetch(props.HOST_API+ "/todo", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -71,4 +72,4 @@ const Form = (props) => {
   }
 
   
-export default Form;
+export default Form
