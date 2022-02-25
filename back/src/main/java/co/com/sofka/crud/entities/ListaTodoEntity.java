@@ -15,8 +15,6 @@ public class ListaTodoEntity {
     @Column(length = 15, nullable = false, unique = true)
     private String name;
 
-
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="lista_todo_entity_id")
     private List<TodoEntity> listaTodoModel;

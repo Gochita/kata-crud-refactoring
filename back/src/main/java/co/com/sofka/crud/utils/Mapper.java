@@ -13,7 +13,6 @@ public class Mapper {
         todo.setName(todoDTO.getName());
         todo.setCompleted(todoDTO.isCompleted());
         return todo;
-
     }
 
     public static ListaTodoEntity mapListDTO_ToList(ListaTodoDTO listaTodoDTO) {
