@@ -28,12 +28,12 @@ public class ListaTodoService {
 
 
     //Servicio para obtener los Todos de una lista
-    public List<TodoDTO> getTodosFromList(Optional <ListaTodoEntity> listaTodoEntity){
+    public List<TodoDTO> getTodosFromList(Optional<ListaTodoEntity> listaTodoEntity) {
 
         return listaTodoEntity.orElseGet(ListaTodoEntity::new)
                 .getListaTodoModel().stream()
-                .map(todoEntity -> new TodoDTO(todoEntity.getId(),todoEntity.getName(),
-                        todoEntity.isCompleted(),listaTodoEntity.get().getId())).collect(Collectors.toList());
+                .map(todoEntity -> new TodoDTO(todoEntity.getId(), todoEntity.getName(),
+                        todoEntity.isCompleted(), listaTodoEntity.get().getId())).collect(Collectors.toList());
     }
 
 
@@ -50,9 +50,9 @@ public class ListaTodoService {
         todoList.setId(listaTodoDTO.getId());
         todoList.setName(listaTodoDTO.getName());
         todoList.setListaTodoModel(new ArrayList<>());
-        ListaTodoEntity prueba=listaTodoRepository.save(todoList);
+        ListaTodoEntity prueba = listaTodoRepository.save(todoList);
         System.out.println(prueba);
-     //   return Mapper.mapList_ToListDTO(listaTodoRepository.save(todoList));
+        //   return Mapper.mapList_ToListDTO(listaTodoRepository.save(todoList));
         return Mapper.mapList_ToListDTO(prueba);
     }
 
@@ -72,11 +72,11 @@ public class ListaTodoService {
         return todoDTO;
     }
 
-    private List<TodoEntity> editTodosInList(ListaTodoEntity TodoList, TodoDTO todoDTO){
+    private List<TodoEntity> editTodosInList(ListaTodoEntity TodoList, TodoDTO todoDTO) {
         return TodoList.getListaTodoModel()
                 .stream()
                 .map(todoEntity -> {
-                    if (todoEntity.getId().equals(todoDTO.getId())){
+                    if (todoEntity.getId().equals(todoDTO.getId())) {
                         todoEntity.setName(todoDTO.getName());
                         todoEntity.setCompleted(todoDTO.isCompleted());
                     }
@@ -85,7 +85,7 @@ public class ListaTodoService {
                 .collect(Collectors.toList());
     }
 
-    public TodoDTO updateToDoByListId(Long listId, TodoDTO todoDTO){
+    public TodoDTO updateToDoByListId(Long listId, TodoDTO todoDTO) {
         var TodoList = listaTodoRepository.findById(listId);
         var updatedTodos = editTodosInList(TodoList.orElseGet(ListaTodoEntity::new), todoDTO);
         ListaTodoEntity todoLista = new ListaTodoEntity();
@@ -97,18 +97,30 @@ public class ListaTodoService {
         return todoDTO;
     }
 
-    public void removeTodoListById(Long id){
+
+    public Object editTodoList(ListaTodoDTO listaTodoDTO) {
+        ListaTodoDTO listaNueva = new ListaTodoDTO();
+        var lista = listaTodoRepository.findById(listaTodoDTO.getId());
+        if (lista.isPresent()) {
+            listaTodoRepository.save(Mapper.mapListDTO_ToList(listaTodoDTO));
+            return listaTodoDTO;
+        }
+        return null;
+    }
+
+    public void removeTodoListById(Long id) {
         var toDoList = listaTodoRepository.findById(id).orElseThrow();
         listaTodoRepository.delete(toDoList);
     }
-    public void removeTodoById(Long id){
+
+    public void removeTodoById(Long id) {
         var toDo = todoRepository.findById(id).orElseThrow();
         todoRepository.delete(toDo);
     }
-    public Iterable  <ListaTodoEntity>  traerTodos (){
+
+    public Iterable<ListaTodoEntity> traerTodos() {
         return listaTodoRepository.findAll();
     }
-
 
 
     public TodoEntity save(TodoEntity todo) {

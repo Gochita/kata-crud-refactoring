@@ -8,8 +8,11 @@ const Form = (props) => {
     const [state, setState] = useState(item);
   
     const onAdd = (event) => {
+     
       event.preventDefault();
-  
+      console.log(state.name)
+      if(state.name=== undefined || state.name.match("^\\s+$")) return;
+      
       const request = {
         name: state.name,
         id: null,
@@ -17,7 +20,7 @@ const Form = (props) => {
       };
   
   
-      fetch(props.HOST_API+ "/todo", {
+      fetch(props.HOST_API+ "/todolist", {
         method: "POST",
         body: JSON.stringify(request),
         headers: {
@@ -33,7 +36,9 @@ const Form = (props) => {
     }
   
     const onEdit = (event) => {
+      
       event.preventDefault();
+      if(state.name=== undefined || state.name.match("^\\s+$")) return;
   
       const request = {
         name: state.name,
@@ -42,7 +47,7 @@ const Form = (props) => {
       };
   
   
-      fetch(props.HOST_API + "/todo", {
+      fetch(props.HOST_API + "/actualizarLista", {
         method: "PUT",
         body: JSON.stringify(request),
         headers: {
@@ -66,8 +71,8 @@ const Form = (props) => {
         onChange={(event) => {
           setState({ ...state, name: event.target.value })
         }}  ></input>
-      {item.id && <button onClick={onEdit}>Actualizar</button>}
-      {!item.id && <button onClick={onAdd}>Crear</button>}
+      {item.id && <button className="btn btn-info" onClick={onEdit}>Actualizar</button>}
+      {!item.id && <button className="btn btn-success" onClick={onAdd}>Crear</button>}
     </form>
   }
 

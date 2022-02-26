@@ -63,8 +63,8 @@ const List = (props) => {
               <td>{todo.id}</td>
               <td>{todo.name}</td>
               <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
-              <td><button onClick={() => onDelete(todo.id)}>Eliminar</button></td>
-              <td><button onClick={() => onEdit(todo)}>Editar</button></td>
+              <td><button className="btn btn-danger" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
+              <td><button className="btn btn-secondary" onClick={() => onEdit(todo)}>Editar</button></td>
             </tr>
           })}
         </tbody>

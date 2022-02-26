@@ -21,45 +21,57 @@ public class ListaTodoController {
     private ListaTodoService listaTodoService;
 
 //Trae los todos de una lista por su id
+
     @GetMapping(value = "/todos/{listId}")
-    public List<TodoDTO>  findTodosByListId(@PathVariable ("listId") Long listId){
+    public List<TodoDTO> findTodosByListId(@PathVariable("listId") Long listId) {
         return listaTodoService.getTodosByListId(listId);
     }
 
-    @GetMapping(value="/todos")
-    public Iterable<ListaTodoEntity> FindTodos(){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(value = "/todos")
+    public Iterable<ListaTodoEntity> FindTodos() {
         return listaTodoService.traerTodos();
     }
-//Guarda un nuevo to do
+
+    //Guarda un nuevo to do
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/todolist")
     public ListaTodoDTO saveNewTodoListById(@RequestBody ListaTodoDTO listaTodoDto) {
         return listaTodoService.createTodoList(listaTodoDto);
     }
+
+    @PutMapping("/actualizarLista")
+    public ListaTodoDTO editarNombreLista(@RequestBody ListaTodoDTO listaTodoDTO){
+        return (ListaTodoDTO) listaTodoService.editTodoList(listaTodoDTO);
+
+    }
+
     //guarda una nuevo to do por id de la lista
     @PostMapping("/todo/{listId}")
-    public TodoDTO saveNewTodoByListId(@PathVariable("listId") Long listId, @RequestBody TodoDTO todoDTO){
+    public TodoDTO saveNewTodoByListId(@PathVariable("listId") Long listId, @RequestBody TodoDTO todoDTO) {
         return listaTodoService.saveNewTodoByListId(listId, todoDTO);
     }
+
     //Actualiza un to do, en caso de no conseguirlo manda un runtimexception
     @PutMapping(value = "/todo/{listId}")
-    public TodoDTO updateTodo(@PathVariable("listId") Long listId, @RequestBody TodoDTO todoDTO){
+    public TodoDTO updateTodo(@PathVariable("listId") Long listId, @RequestBody TodoDTO todoDTO) {
         return listaTodoService.updateToDoByListId(listId, todoDTO);
     }
 
     //Elimina una lista por id
     @DeleteMapping("/todolist/{listId}")
-    public void removeTodoListById(@PathVariable("listId") Long listId){
+    public void removeTodoListById(@PathVariable("listId") Long listId) {
         listaTodoService.removeTodoListById(listId);
     }
 
     //Elimina un to do por id
     @DeleteMapping("/todo/{todoId}")
-    public void removeTodoById(@PathVariable("todoId") Long todoId){
+    public void removeTodoById(@PathVariable("todoId") Long todoId) {
         listaTodoService.removeTodoById(todoId);
     }
 
     @GetMapping(value = "api/{id}/todo")
-    public TodoEntity get(@PathVariable("id") Long id){
+    public TodoEntity get(@PathVariable("id") Long id) {
         return listaTodoService.get(id);
     }
 

@@ -12,7 +12,7 @@ public class ListaTodoEntity {
     @Column(unique=true, nullable=false)
     private Long id;
 
-    @Column(length = 15, nullable = false, unique = true)
+    @Column(length = 255, nullable = false, unique = true)
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL)
