@@ -15,7 +15,7 @@ const List = (props) => {
   
   
     const onDelete = (id) => {
-      fetch(HOST_API + "/" + id + "/todo", {
+      fetch(HOST_API + "/todolist/" + id , {
         method: "DELETE"
       }).then((list) => {
         dispatch({ type: "delete-item", id })
@@ -31,8 +31,10 @@ const List = (props) => {
         name: todo.name,
         id: todo.id,
         completed: event.target.checked
+
       };
-      fetch(HOST_API + "/todo", {
+     
+      fetch(HOST_API + "/actualizarLista", {
         method: "PUT",
         body: JSON.stringify(request),
         headers: {
@@ -61,7 +63,8 @@ const List = (props) => {
           {currentList.map((todo) => {
             return <tr key={todo.id} style={todo.completed ? decorationDone : {}}>
               <td>{todo.id}</td>
-              <td>{todo.name}</td>
+              {todo.completed && <td>{todo.id}</td>}
+              {!todo.completed && <td>{todo.name}</td>}
               <td><input type="checkbox" defaultChecked={todo.completed} onChange={(event) => onChange(event, todo)}></input></td>
               <td><button className="btn btn-danger" onClick={() => onDelete(todo.id)}>Eliminar</button></td>
               <td><button className="btn btn-secondary" onClick={() => onEdit(todo)}>Editar</button></td>
