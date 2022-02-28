@@ -14,8 +14,9 @@ export const Form = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Ingrese el nombre de la lista"
+        placeholder="Ingrese lista"
         value={lista}
+        className="me-3"
         onChange={(e) => setLista(e.target.value)}
       ></input>
 

@@ -11,6 +11,8 @@ const reducer = (listas, action) => {
       return [...listas, action.lista];
     case "delete-list":
       return listas.filter((lista) => lista.id !== action.listId);
+    case "post-todo":
+      return [...listas, action.lista];
 
     default:
       return listas;
@@ -32,11 +34,14 @@ export const ListContextProvider = ({ children }) => {
   const eliminarLista = (listId) => {
     fetch(HOST_API + "/todolist/" + listId, {
       method: "DELETE",
-    })
-    .then(()=>dispatch({ type: "delete-list", listId: listId }))
-     
-        
-      }
+    }).then(() => dispatch({ type: "delete-list", listId: listId }));
+  };
+
+  const agregarTodo = (listId) => {
+    fetch(HOST_API + "/todo/" + listId, {
+      method: "POST",
+    }).then(() => dispatch({ type: "post-todo", listId: listId }));
+  };
 
   const agregarLista = (nombreLista) => {
     const request = {

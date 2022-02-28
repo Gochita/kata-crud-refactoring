@@ -31,15 +31,14 @@ const Todos = ({list}) => {
               <td>
                 <input
                   type="checkbox"
-                  
                   defaultChecked={todo.completed}
                 />
               </td>
               <td>
-                <button >Editar</button>
-                <button >
-                  Eliminar
-                </button>
+                <button 
+                className="btn btn-secondary">Editar</button>
+                <button 
+                className="btn btn-danger">Eliminar</button>
               </td>
             </tr>
           ))}
