@@ -8,9 +8,7 @@ import { ListContextProvider } from "./contexts/ListContext";
 ReactDOM.render(
   <ListContextProvider>
     <TodoContextProvider>
-     
-        <App />
-      
+        <App />   
     </TodoContextProvider>
   </ListContextProvider>,
 
