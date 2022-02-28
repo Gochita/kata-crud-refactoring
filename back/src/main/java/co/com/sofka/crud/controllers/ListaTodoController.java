@@ -22,9 +22,18 @@ public class ListaTodoController {
 
 //Trae los todos de una lista por su id
 
-    @GetMapping(value = "/todos/{listId}")
+
+
+
+    @GetMapping(value = "/todosbylistid/{listId}")
     public List<TodoDTO> findTodosByListId(@PathVariable("listId") Long listId) {
         return listaTodoService.getTodosByListId(listId);
+    }
+
+    @GetMapping(value="/listaTodos")
+    public List <ListaTodoEntity> findListas(){
+        return listaTodoService.getListas();
+
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -35,6 +44,7 @@ public class ListaTodoController {
 
     //Guarda un nuevo to do
     @CrossOrigin(origins = "http://localhost:3000")
+
     @PostMapping(value = "/todolist")
     public ListaTodoDTO saveNewTodoListById(@RequestBody ListaTodoDTO listaTodoDto) {
         return listaTodoService.createTodoList(listaTodoDto);

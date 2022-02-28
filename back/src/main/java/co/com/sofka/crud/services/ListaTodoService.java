@@ -27,6 +27,10 @@ public class ListaTodoService {
     private TodoRepository todoRepository;
 
 
+    public List <ListaTodoEntity> getListas(){
+        return listaTodoRepository.findAll();
+    }
+
     //Servicio para obtener los Todos de una lista
     public List<TodoDTO> getTodosFromList(Optional<ListaTodoEntity> listaTodoEntity) {
 

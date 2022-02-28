@@ -32,6 +32,8 @@ public class Mapper {
 
     }
 
+
+
     public static ListaTodoDTO mapList_ToListDTO(ListaTodoEntity listaTodoEntity) {
         ListaTodoDTO listaTodoDTO = new ListaTodoDTO();
         listaTodoDTO.setId(listaTodoEntity.getId());
