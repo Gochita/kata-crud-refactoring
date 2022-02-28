@@ -4,6 +4,8 @@ import { HOST_API } from "../App";
 export const ListContext = createContext();
 export const agregarListaContext = createContext();
 export const eliminarListaContext = createContext();
+export const agregarTodoContext = createContext();
+export const eliminarTodoContext= createContext();
 
 const reducer = (listas, action) => {
   switch (action.type) {
@@ -12,7 +14,15 @@ const reducer = (listas, action) => {
     case "delete-list":
       return listas.filter((lista) => lista.id !== action.listId);
     case "post-todo":
-      return [...listas, action.lista];
+      return listas.map((lista)=>{
+        if(lista.id === action.datos.listId){
+          return lista.listaTodoModel.push(action.datos.todo);
+        }else{
+          return lista;
+        }
+      });
+    case "delete-todo":
+      return listas.filter((lista) => lista.id !== action.listId);
 
     default:
       return listas;
@@ -36,12 +46,31 @@ export const ListContextProvider = ({ children }) => {
       method: "DELETE",
     }).then(() => dispatch({ type: "delete-list", listId: listId }));
   };
+  const eliminarTodo = (todoId) =>{
+    fetch(HOST_API + "/todo/" + todoId, {
+      method: "DELETE",
+    }).then(() => dispatch({ type: "delete-todo", todoId: todoId }));
+  };
 
-  const agregarTodo = (listId) => {
+  
+
+  const agregarTodo = (nombreTodo,listId) => {
+    const request = {
+      id: null,
+      name: nombreTodo,
+      completed: false
+    };
     fetch(HOST_API + "/todo/" + listId, {
       method: "POST",
-    }).then(() => dispatch({ type: "post-todo", listId: listId }));
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    })
+      .then((response) => response.json())
+      .then((todo) =>dispatch({ type: "post-todo",datos: {listId: listId, todo:todo} }))
   };
+
 
   const agregarLista = (nombreLista) => {
     const request = {
@@ -58,7 +87,6 @@ export const ListContextProvider = ({ children }) => {
     })
       .then((response) => response.json())
       .then((list) => {
-        //setTodoListas(list);
         dispatch({ type: "add-list", lista: list });
       });
   };
@@ -67,9 +95,11 @@ export const ListContextProvider = ({ children }) => {
     <ListContext.Provider value={todoListas}>
       <agregarListaContext.Provider value={agregarLista}>
         <eliminarListaContext.Provider value={eliminarLista}>
-          {children}
+          <agregarTodoContext.Provider value={agregarTodo}>
+            {children}    
+          </agregarTodoContext.Provider>
         </eliminarListaContext.Provider>
       </agregarListaContext.Provider>
     </ListContext.Provider>
   );
-};
+  }

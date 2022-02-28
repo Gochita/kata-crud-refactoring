@@ -1,18 +1,31 @@
-import React from "react";
-
+import React ,{useContext, useState}from "react";
+import { agregarTodoContext } from "../contexts/ListContext";
 
 const Todos = ({list}) => {
+
+  const [todo, setTodo] = useState('')
+  const addTodo= useContext(agregarTodoContext);
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+  //  console.log(todo);
+    addTodo( todo,list.id);
+    setTodo('');
+  }
   return (
     <div>
       <div>nuevo todo</div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           placeholder="¿Que hay pa hacer?"
           className="me-3"
+          value={todo}
+          onChange={(e)=>setTodo(e.target.value)}
         ></input>
-        <button className="btn btn-success">Agregar todo</button>
+        <button className="btn btn-success"
+         type="submit"
+        >Agregar todo</button>
       </form>
       <table>
         <thead>
