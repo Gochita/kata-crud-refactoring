@@ -5,7 +5,8 @@ export const ListContext = createContext();
 export const agregarListaContext = createContext();
 export const eliminarListaContext = createContext();
 export const agregarTodoContext = createContext();
-export const eliminarTodoContext= createContext();
+export const eliminarTodoContext = createContext();
+export const actualizarTodoContext = createContext();
 
 const reducer = (listas, action) => {
   switch (action.type) {
@@ -14,15 +15,30 @@ const reducer = (listas, action) => {
     case "delete-list":
       return listas.filter((lista) => lista.id !== action.listId);
     case "post-todo":
-      return listas.map((lista)=>{
-        if(lista.id === action.datos.listId){
+      return listas.map((lista) => {
+        if (lista.id === action.datos.listId) {
           return lista.listaTodoModel.push(action.datos.todo);
-        }else{
+        } else {
           return lista;
         }
       });
     case "delete-todo":
       return listas.filter((lista) => lista.id !== action.listId);
+    case "update-todo":
+      return listas.map((lista) => {
+        if (lista.id === action.datos.listId) {
+          return lista.listaTodoModel.map((todo) => {
+            if (todo.id === action.datos.todo.id) {
+              return action.datos.todo;
+            }else{
+              return todo;
+            }
+            
+          });
+        } else {
+          return lista;
+        }
+      });
 
     default:
       return listas;
@@ -46,19 +62,17 @@ export const ListContextProvider = ({ children }) => {
       method: "DELETE",
     }).then(() => dispatch({ type: "delete-list", listId: listId }));
   };
-  const eliminarTodo = (todoId) =>{
+  const eliminarTodo = (todoId) => {
     fetch(HOST_API + "/todo/" + todoId, {
       method: "DELETE",
     }).then(() => dispatch({ type: "delete-todo", todoId: todoId }));
   };
 
-  
-
-  const agregarTodo = (nombreTodo,listId) => {
+  const agregarTodo = (nombreTodo, listId) => {
     const request = {
       id: null,
       name: nombreTodo,
-      completed: false
+      completed: false,
     };
     fetch(HOST_API + "/todo/" + listId, {
       method: "POST",
@@ -68,9 +82,10 @@ export const ListContextProvider = ({ children }) => {
       body: JSON.stringify(request),
     })
       .then((response) => response.json())
-      .then((todo) =>dispatch({ type: "post-todo",datos: {listId: listId, todo:todo} }))
+      .then((todo) =>
+        dispatch({ type: "post-todo", datos: { listId: listId, todo: todo } })
+      );
   };
-
 
   const agregarLista = (nombreLista) => {
     const request = {
@@ -91,15 +106,40 @@ export const ListContextProvider = ({ children }) => {
       });
   };
 
+  const actualizarTodo = (todo, listId) => {
+    const request = {
+      id: todo.id,
+      name: todo.name,
+      completed: todo.completed,
+    };
+    fetch(HOST_API + "/todo/" + listId, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    })
+      .then((response) => response.json())
+      .then((todoRes) =>
+        dispatch({
+          type: "update-todo",
+          datos: { listId: listId, todo: todoRes },
+        })
+      );
+  };
+
+  const tachar = (todo, listId) => {};
   return (
     <ListContext.Provider value={todoListas}>
       <agregarListaContext.Provider value={agregarLista}>
         <eliminarListaContext.Provider value={eliminarLista}>
           <agregarTodoContext.Provider value={agregarTodo}>
-            {children}    
+            <actualizarTodoContext.Provider value={actualizarTodo}>
+              {children}
+            </actualizarTodoContext.Provider>
           </agregarTodoContext.Provider>
         </eliminarListaContext.Provider>
       </agregarListaContext.Provider>
     </ListContext.Provider>
   );
-  }
+};

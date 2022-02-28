@@ -1,16 +1,22 @@
 import React ,{useContext, useState}from "react";
-import { agregarTodoContext } from "../contexts/ListContext";
+import {  actualizarTodoContext, agregarTodoContext } from "../contexts/ListContext";
+
 
 const Todos = ({list}) => {
-  const checked=false;
+
   const tachado= {textDecoration: 'line-through'}
   const [todo, setTodo] = useState('')
   const addTodo= useContext(agregarTodoContext);
+  const updateTodo= useContext(actualizarTodoContext);
   const handleSubmit = (e) =>{
     e.preventDefault();
-  //  console.log(todo);
     addTodo( todo,list.id);
     setTodo('');
+  }
+
+  const tachar = (todoComplete)=>{
+    todoComplete.completed= !todoComplete.completed;
+    updateTodo(todoComplete, list.id)
   }
   return (
     <div>
@@ -39,15 +45,15 @@ const Todos = ({list}) => {
         </thead>
         <tbody>
           {list.listaTodoModel.map((todo) => (
-            <tr style={checked? tachado : {}}
+            <tr style={todo.completed? tachado : {}}
              key={todo.id} >
               <td>{todo.id}</td>
               <td>{todo.name}</td>
               <td>
                 <input
                   type="checkbox"
-                  onChange={()=>!checked}
-                  defaultChecked={checked}
+                  onChange={()=>tachar(todo)}
+                  defaultChecked={todo.completed}
                 />
               </td>
               <td>
