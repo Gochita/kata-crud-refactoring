@@ -18,11 +18,11 @@ const TodoList = ({list}) => {
     
   return (
     <div>
-      {todos.map((todo) =>{
+      {/* {todos.map((todo) =>{
           return <div>
               {todo.name}
           </div>
-      })}
+      })} */}
     </div>
   )
 }
