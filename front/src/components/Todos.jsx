@@ -1,5 +1,5 @@
 import React ,{useContext, useState}from "react";
-import {  actualizarTodoContext, agregarTodoContext } from "../contexts/ListContext";
+import {  actualizarTodoContext, agregarTodoContext, eliminarTodoContext } from "../contexts/ListContext";
 
 
 const Todos = ({list}) => {
@@ -8,6 +8,7 @@ const Todos = ({list}) => {
   const [todo, setTodo] = useState('')
   const addTodo= useContext(agregarTodoContext);
   const updateTodo= useContext(actualizarTodoContext);
+  const deleteTodo= useContext(eliminarTodoContext);
   const handleSubmit = (e) =>{
     e.preventDefault();
     addTodo( todo,list.id);
@@ -60,7 +61,7 @@ const Todos = ({list}) => {
                 <button 
                 className="btn btn-secondary">Editar</button>
                 <button 
-                className="btn btn-danger">Eliminar</button>
+                className="btn btn-danger" onClick={() =>deleteTodo(todo.id,list.id)}>Eliminar</button>
               </td>
             </tr>
           ))}

@@ -17,23 +17,30 @@ const reducer = (listas, action) => {
     case "post-todo":
       return listas.map((lista) => {
         if (lista.id === action.datos.listId) {
-          return lista.listaTodoModel.push(action.datos.todo);
+          //  return lista.listaTodoModel.push(action.datos.todo);
+          console.log(lista);
+          return [...lista.todos, action.datos.todo];
         } else {
           return lista;
         }
       });
     case "delete-todo":
-      return listas.filter((lista) => lista.id !== action.listId);
+      return listas.map((lista) => {
+        if (lista.id === action.datos.listId) {
+          lista.todos.filter((todo) => todo.id !== action.datos.todoId);
+        } else {
+          return lista;
+        }
+      });
     case "update-todo":
       return listas.map((lista) => {
         if (lista.id === action.datos.listId) {
           return lista.listaTodoModel.map((todo) => {
             if (todo.id === action.datos.todo.id) {
               return action.datos.todo;
-            }else{
+            } else {
               return todo;
             }
-            
           });
         } else {
           return lista;
@@ -62,10 +69,10 @@ export const ListContextProvider = ({ children }) => {
       method: "DELETE",
     }).then(() => dispatch({ type: "delete-list", listId: listId }));
   };
-  const eliminarTodo = (todoId) => {
+  const eliminarTodo = (todoId, listId) => {
     fetch(HOST_API + "/todo/" + todoId, {
       method: "DELETE",
-    }).then(() => dispatch({ type: "delete-todo", todoId: todoId }));
+    }).then(() => dispatch({ type: "delete-todo", datos: { todoId, listId } }));
   };
 
   const agregarTodo = (nombreTodo, listId) => {
@@ -135,7 +142,9 @@ export const ListContextProvider = ({ children }) => {
         <eliminarListaContext.Provider value={eliminarLista}>
           <agregarTodoContext.Provider value={agregarTodo}>
             <actualizarTodoContext.Provider value={actualizarTodo}>
-              {children}
+              <eliminarTodoContext.Provider value={eliminarTodo}>
+                {children}  
+              </eliminarTodoContext.Provider>
             </actualizarTodoContext.Provider>
           </agregarTodoContext.Provider>
         </eliminarListaContext.Provider>
